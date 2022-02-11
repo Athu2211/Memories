@@ -18,7 +18,9 @@ dotenv.config();
 //app.use(express.json()) --- one more method
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
-app.use(cors())
+app.use(cors());
+
+app.use('/posts', postRoute);
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -31,8 +33,6 @@ mongoose.connect(process.env.MONGO_URL, {
         console.log(err);
     });
 
-
-app.use('/posts', postRoute);
 
 app.listen(PORT, () => {
     console.log(`Backend server is running in ${PORT}`);

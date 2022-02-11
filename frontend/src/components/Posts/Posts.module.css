@@ -1,1 +1,11 @@
+.mainContainer {
+  display: flex;
+  align-items: center;
+}
 
+/* smMargin {
+    margin: theme.spacing(1);
+  } */
+actionDiv {
+  text-align: center;
+}
