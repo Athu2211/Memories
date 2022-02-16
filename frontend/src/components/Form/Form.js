@@ -1,28 +1,48 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { createPost } from '../../actions/posts';
+import { createPost, updatePost } from '../../actions/posts';
 import styles from './Form.module.css';
 
-function Form(props) {
+function Form({ currentId, setCurrentId }) {
     const [postData, setPostdata] = useState({
-        creator: '', 
+        creator: '',
         title: '',
         message: '',
         tags: '',
         selectedFile: ''
     });
+    //since we dont want all the posts from store fetching the post with current id
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createPost(postData));
+        if (currentId) {
+            dispatch(updatePost(currentId, postData))
+        } else {
+            dispatch(createPost(postData));
+        }
+        clear();
     }
 
     const clear = () => {
-
+        setCurrentId(null);
+        setPostdata({
+            creator: '',
+            title: '',
+            message: '',
+            tags: '',
+            selectedFile: ''
+        });
     }
+
+    useEffect(() => {
+        if (post) {
+            setPostdata(post);
+        }
+    }, [post])
 
     return (
         <Paper className={styles.paper}>
@@ -30,7 +50,7 @@ function Form(props) {
                 noValidate
                 className={styles.form}
                 onSubmit={handleSubmit}>
-                <h4 className={styles.head}>Creating a Memory</h4>
+                <h4 className={styles.head}>{!currentId ? "Creating " : "Editing "} a Memory</h4>
                 <TextField
                     className={styles.textfield}
                     name="creator"
@@ -67,7 +87,7 @@ function Form(props) {
                     <FileBase
                         type="file"
                         multiple={false}
-                        onDone={({base64}) => setPostdata({ ...postData, selectedFile: base64 })} />
+                        onDone={({ base64 }) => setPostdata({ ...postData, selectedFile: base64 })} />
                 </div>
                 <Button
                     className={styles.buttonSubmit}
