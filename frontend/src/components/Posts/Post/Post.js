@@ -46,7 +46,7 @@ function Post({ post, setCurrentId }) {
             </CardContent>
             <CardActions className={styles.cardActions}>
                 <Button size="small" color="primary" onClick={handleLike} >
-                    <ThumbUpAltIcon fontSize="small" />Likes {post.likeCount}
+                    <ThumbUpAltIcon fontSize="small" />&nbsp;{post.likeCount}
                 </Button>
                 <Button size="small" color="error" onClick={handleDelete} >
                     <DeleteIcon fontSize="small" /> Delete

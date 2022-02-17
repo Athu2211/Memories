@@ -1,6 +1,6 @@
 .AppBar {
   border-radius: 15px;
-  margin: 30px 0; 
+  margin: 30px 0;
   display: flex !important;
   flex-direction: row !important;
   justify-content: center !important;
@@ -13,5 +13,11 @@
 }
 
 .image {
-  margin-left:15px !important;
+  margin-left: 15px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainContain {
+    flex-direction: column-reverse;
+  }
 }
