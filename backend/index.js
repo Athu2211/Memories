@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import postRoute from './routes/Posts.js';
+import userRoute from './routes/Users.js';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+app.use('/user', userRoute);
 app.use('/posts', postRoute);
 
 mongoose.connect(process.env.MONGO_URL, {

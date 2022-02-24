@@ -1,6 +1,6 @@
 .media {
   height: 0;
-  padding-top: 56.25%;
+  padding-top: 80%;
   background-color: rgba(0, 0, 0, 0.6);
   background-blend-mode: darken;
 }
@@ -9,14 +9,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 15px;
+  border-radius: 20px !important;
   height: 100%;
   position: relative;
 }
 
 .overlay {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 20px;
   color: white;
 }

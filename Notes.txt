@@ -1,0 +1,38 @@
+# Memories
+Backend
+    npm i body-parser cors express mongoose dotenv nodemon
+        Body-parser = to send post requests
+        cors = enables cross origin requests
+
+Frontend
+    npm i axios moment react-file-base64 redux redux-thunk react-redux @material-ui/core
+        axios = For api requests
+        moment = Library for working with time and date
+        react-file-base = To convert images
+        redux = For managing and centralizing application state
+        redux-thunk = For asynchronous actions using redux
+
+    import Provider in index.js
+        Provider keeps a track of the store acts as global state so the state can be accessed from anywhere inside the app
+    Import createStore, applyMiddleware, compose
+    Import thunk
+
+    When action gets dispatched in App.js the flow goes to post reducer where the logic is done
+
+-------------------------------------------------------------------------------------------------------------
+Implementing JWT and Google OAuth Authentication
+
+Frontend
+    npm install jwt-decode react-google-login
+
+    to get google client id "https://console.developers.google.com/?pli=1"
+    Go to OAuth consent screen
+        create new project
+    Go to credentials
+        create credentials
+        select OAuth client id
+    Id: 589903776373-6tvob5u01n5kklpoaab82ha6dqqq40cg.apps.googleusercontent.com
+    secret: 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
+
+Backend
+    npm install bcryptjs jsonwebtoken
