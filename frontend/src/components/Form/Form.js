@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { createPost, updatePost } from '../../actions/posts';
-import styles from './Form.module.css';
+import useStyles from './styles';
 
 const initialState = { title: '', message: '', tags: '', selectedFile: '' };
 
@@ -13,6 +13,7 @@ function Form({ currentId, setCurrentId }) {
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const classes = useStyles();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,15 +37,15 @@ function Form({ currentId, setCurrentId }) {
     }, [post])
 
     return (
-        <Paper className={styles.paper}>
+        <Paper className={classes.paper}>
             {user ?.result ?.name ? (
                 <form autoComplete="off"
                     noValidate
-                    className={styles.form}
+                    className={`${classes.root} ${classes.form}`}
                     onSubmit={handleSubmit}>
-                    <h4 className={styles.head}>{!currentId ? "Creating " : "Editing "} a Memory</h4>
+                    <h4 className={classes.head}>{!currentId ? "Creating " : "Editing "} a Memory</h4>
                     <TextField
-                        className={styles.textfield}
+                        className={classes.textfield}
                         name="title"
                         variant="outlined"
                         label="Title"
@@ -52,7 +53,7 @@ function Form({ currentId, setCurrentId }) {
                         value={postData.title}
                         onChange={(e) => setPostdata({ ...postData, title: e.target.value })} />
                     <TextField
-                        className={styles.textfield}
+                        className={classes.textfield}
                         name="message"
                         variant="outlined"
                         label="Message"
@@ -60,25 +61,31 @@ function Form({ currentId, setCurrentId }) {
                         value={postData.message}
                         onChange={(e) => setPostdata({ ...postData, message: e.target.value })} />
                     <TextField
-                        className={styles.textfield}
+                        className={classes.textfield}
                         name="tags"
                         variant="outlined"
                         label="Tags"
                         fullWidth
                         value={postData.tags}
                         onChange={(e) => setPostdata({ ...postData, tags: e.target.value.split(',') })} />
-                    <div className={styles.fileInput}>
+                    <div className={classes.fileInput}>
                         <FileBase
                             type="file"
                             multiple={false}
                             onDone={({ base64 }) => setPostdata({ ...postData, selectedFile: base64 })} />
                     </div>
                     <Button
-                        className={styles.buttonSubmit}
+                        className={classes.buttonSubmit}
+                        variant="contained" 
+                        color="primary" 
+                        size="large"
                         type="submit"
                     >Submit</Button>
                     <Button
-                        className={styles.buttonClear}
+                        className={classes.buttonSubmit}
+                        variant="contained" 
+                        color="secondary" 
+                        size="large"
                         onClick={clear}
                     >Clear</Button>
                 </form>

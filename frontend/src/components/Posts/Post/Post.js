@@ -6,12 +6,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import styles from './Post.module.css';
+import useStyles from './styles';
 import { deletePost, likePost } from '../../../actions/posts';
 
 function Post({ post, setCurrentId }) {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const classes = useStyles();
 
     const handleDelete = () => {
         dispatch(deletePost(post._id));
@@ -35,17 +36,17 @@ function Post({ post, setCurrentId }) {
     };
 
     return (
-        <Card className={styles.card}>
+        <Card className={classes.card}>
             <CardMedia
-                className={styles.media}
+                className={classes.media}
                 image={post.selectedFile}
                 title={post.title} />
-            <div className={styles.overlay}>
+            <div className={classes.overlay}>
                 <Typography variant="h6">{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
             {(user ?.result ?.googleId === post ?.creator || user ?.result ?._id === post ?.creator) && (
-                <div className={styles.overlay2}>
+                <div className={classes.overlay2}>
                     <Button
                         style={{ color: 'white' }}
                         size="small"
@@ -55,19 +56,19 @@ function Post({ post, setCurrentId }) {
                     </Button>
                 </div>
             )}
-            <div className={styles.details}>
+            <div className={classes.details}>
                 <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
-            <Typography className={styles.title} gutterBottom variant="h5" component="h2">{(post.title)}</Typography>
+            <Typography className={classes.title} gutterBottom variant="h5" component="h2">{(post.title)}</Typography>
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">{(post.message)}</Typography>
             </CardContent>
-            <CardActions className={styles.cardActions}>
+            <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" onClick={handleLike} disabled={!user ?.result}>
                     <Likes />
                 </Button>
                 {(user ?.result ?.googleId === post ?.creator || user ?.result ?._id === post ?.creator) && (
-                    <Button size="small" color="error" onClick={handleDelete} >
+                    <Button size="small" color="secondary" onClick={handleDelete} >
                         <DeleteIcon fontSize="small" /> Delete
                     </Button>
                 )}
