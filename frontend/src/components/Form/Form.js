@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { TextField, Button, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { createPost, updatePost } from '../../actions/posts';
@@ -10,19 +11,21 @@ const initialState = { title: '', message: '', tags: '', selectedFile: '' };
 function Form({ currentId, setCurrentId }) {
     const [postData, setPostdata] = useState(initialState);
     //since we dont want all the posts from store fetching the post with current id
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+    const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null);
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const history = useHistory();
     const classes = useStyles();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (currentId) {
-            dispatch(updatePost(currentId, { ...postData, name: user ?.result ?.name }))
+            dispatch(updatePost(currentId, { ...postData, name: user ?.result ?.name }));
+            clear();
         } else {
-            dispatch(createPost({ ...postData, name: user ?.result ?.name }));
+            dispatch(createPost({ ...postData, name: user ?.result ?.name }, history));
+            clear();
         }
-        clear();
     }
 
     const clear = () => {
@@ -37,7 +40,7 @@ function Form({ currentId, setCurrentId }) {
     }, [post])
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             {user ?.result ?.name ? (
                 <form autoComplete="off"
                     noValidate

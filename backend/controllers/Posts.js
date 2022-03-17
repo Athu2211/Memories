@@ -1,10 +1,49 @@
 import mongoose from 'mongoose';
 import Posts from '../models/Post.js';
 
+
 export const getPosts = async (req, res) => {
+    const { page } = req.query;
     try {
-        const posts = await Posts.find();
-        res.status(200).json(posts);
+        const LIMIT = 8;
+        //getting start index of every page
+        const startIndex = (Number(page) - 1) * LIMIT;
+        const total = await Posts.countDocuments({});
+        //sorting it to get new post first
+        //limiting the no of posts
+        //jumping to the required page
+        const posts = await Posts.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+        // const posts = await Posts.find();
+        // res.status(200).json(posts);
+        
+        res.status(200).json({  data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total/LIMIT) });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
+export const getPost = async (req, res) => { 
+    const { id } = req.params;
+
+    try {
+        const post = await Posts.findById(id);
+        
+        res.status(200).json(post);
+    } catch (err) {
+        res.status(404).json(err);
+    }
+}
+//Query => '/posts?page=1'
+//Params => '/posts/:id'
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query;
+
+    try {
+        const title = new RegExp(searchQuery, 'i'); 
+        // i is for ignoring case
+        //finding post that match one of the two criteria
+        //since tag is an array we are checking it
+        const posts = await Posts.find({ $or: [ {title}, { tags: { $in: tags.split(',')}}]});
+        res.status(200).json({data:posts});
     } catch (err) {
         res.status(500).json(err);
     }
