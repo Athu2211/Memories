@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom';
 import { Container, Grid, Grow, Paper, AppBar, TextField, Button } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
+import SearchIcon from '@material-ui/icons/Search';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import Paginate from '../Pagination/Pagination';
@@ -71,6 +72,7 @@ const Home = () => {
                                 variant="outlined"
                             />
                             <Button
+                                startIcon={<SearchIcon />}
                                 onClick={searchPost}
                                 className={classes.searchButton}
                                 variant="contained"

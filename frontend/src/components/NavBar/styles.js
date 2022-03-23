@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '300px',
+    width: '200px',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
     },
@@ -35,7 +35,7 @@ export default makeStyles((theme) => ({
   profile: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '400px',
+    width: '200px',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
@@ -46,17 +46,8 @@ export default makeStyles((theme) => ({
   logout: {
     marginLeft: '0px',
   },
-  userName: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    textAlign: 'center',
-  },
   brandContainer: {
     display: 'flex',
     alignItems: 'center',
-  },
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
   },
 }));
