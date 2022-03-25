@@ -55,8 +55,8 @@ function NavBar(props) {
                         <Button variant="contained" color="secondary" className={classes.logout} onClick={handleLogout}>LogOut</Button>
                     </div>
                 ) : (
-                    <Button component={Link} to="/auth" variant="contained" color="primary">
-                        Sign In
+                    <Button variant="contained" color="primary">
+                        <Link to="/auth">Sign In</Link>
                     </Button>
                 )}
             </Toolbar>
